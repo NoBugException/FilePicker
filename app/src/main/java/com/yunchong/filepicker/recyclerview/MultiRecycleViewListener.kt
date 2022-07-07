@@ -1,0 +1,11 @@
+package com.yunchong.filepicker.recyclerview
+
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+
+interface MultiRecycleViewListener<T> {
+    fun getItemViewType(position: Int): Int
+    fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder?
+    fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: List<Any?>)
+    fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int)
+}
