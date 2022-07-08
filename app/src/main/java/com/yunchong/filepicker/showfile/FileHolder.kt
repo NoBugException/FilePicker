@@ -20,11 +20,13 @@ class FileHolder {
 
     class DefaultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var mImageView: ImageView
+        var mVideoImageView: ImageView
         var mFileName: TextView
         var mFilePath: TextView
 
         init {
             mImageView = itemView.findViewById(R.id.showfile_list_item_image)
+            mVideoImageView = itemView.findViewById(R.id.showfile_list_item_video_image)
             mFileName = itemView.findViewById(R.id.showfile_list_item_title)
             mFilePath = itemView.findViewById(R.id.showfile_list_item_sub)
         }

@@ -17,6 +17,16 @@
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintBottom_toBottomOf="parent"/>
 
+  <ImageView
+      android:id="@+id/showfile_list_item_video_image"
+      android:layout_width="20dp"
+      android:layout_height="20dp"
+      android:src="@mipmap/ic_play_icon"
+      app:layout_constraintLeft_toLeftOf="@id/showfile_list_item_image"
+      app:layout_constraintRight_toRightOf="@id/showfile_list_item_image"
+      app:layout_constraintTop_toTopOf="@id/showfile_list_item_image"
+      app:layout_constraintBottom_toBottomOf="@id/showfile_list_item_image"/>
+
   <TextView
       android:id="@+id/showfile_list_item_title"
       android:textColor="@color/black"

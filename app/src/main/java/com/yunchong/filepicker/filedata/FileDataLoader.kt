@@ -474,7 +474,8 @@ object FileDataLoader {
         val projection = arrayOf(
             MediaStore.Images.ImageColumns._ID,
             MediaStore.Images.ImageColumns.DATA,
-            MediaStore.Images.ImageColumns.DISPLAY_NAME
+            MediaStore.Images.ImageColumns.DISPLAY_NAME,
+            MediaStore.Video.VideoColumns.MIME_TYPE
         )
         var cursor: Cursor? = null
         try {
@@ -496,10 +497,12 @@ object FileDataLoader {
                     val idColumnIndex: Int = it.getColumnIndex(MediaStore.Images.ImageColumns._ID)
                     val nameColumnIndex: Int = it.getColumnIndex(MediaStore.Images.ImageColumns.DISPLAY_NAME)
                     val dataColumnIndex: Int = it.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+                    val mimeColumnIndex: Int = it.getColumnIndex(MediaStore.Video.VideoColumns.MIME_TYPE)
                     var imageId: String = it.getString(idColumnIndex)
                     var fileName: String = it.getString(nameColumnIndex)
                     var filePath: String = it.getString(dataColumnIndex)
-                    val fileItem = FileItem(FileSystemType.PHOTO.ordinal, imageId, filePath, fileName)
+                    var fileMime: String = it.getString(mimeColumnIndex)
+                    val fileItem = FileItem(FileSystemType.PHOTO.ordinal, imageId, filePath, fileName, fileMime)
                     photos.add(fileItem)
                 }
             }
@@ -519,7 +522,8 @@ object FileDataLoader {
         val projection = arrayOf(
             MediaStore.Audio.AudioColumns._ID,
             MediaStore.Audio.AudioColumns.DATA,
-            MediaStore.Audio.AudioColumns.DISPLAY_NAME
+            MediaStore.Audio.AudioColumns.DISPLAY_NAME,
+            MediaStore.Video.VideoColumns.MIME_TYPE
         )
         var cursor: Cursor? = null
         try {
@@ -541,10 +545,12 @@ object FileDataLoader {
                     val idColumnIndex: Int = it.getColumnIndex(MediaStore.Audio.AudioColumns._ID)
                     val nameColumnIndex: Int = it.getColumnIndex(MediaStore.Audio.AudioColumns.DISPLAY_NAME)
                     val dataColumnIndex: Int = it.getColumnIndex(MediaStore.Audio.AudioColumns.DATA)
+                    val mimeColumnIndex: Int = it.getColumnIndex(MediaStore.Video.VideoColumns.MIME_TYPE)
                     var fileId: String = it.getString(idColumnIndex)
                     var fileName: String = it.getString(nameColumnIndex)
                     var filePath: String = it.getString(dataColumnIndex)
-                    val fileItem = FileItem(FileSystemType.MUSIC.ordinal, fileId, filePath, fileName)
+                    var fileMime: String = it.getString(mimeColumnIndex)
+                    val fileItem = FileItem(FileSystemType.MUSIC.ordinal, fileId, filePath, fileName, fileMime)
                     musics.add(fileItem)
                 }
             }
@@ -564,7 +570,8 @@ object FileDataLoader {
         val projection = arrayOf(
             MediaStore.Video.VideoColumns._ID,
             MediaStore.Video.VideoColumns.DATA,
-            MediaStore.Video.VideoColumns.DISPLAY_NAME
+            MediaStore.Video.VideoColumns.DISPLAY_NAME,
+            MediaStore.Video.VideoColumns.MIME_TYPE
         )
         var cursor: Cursor? = null
         try {
@@ -586,10 +593,12 @@ object FileDataLoader {
                     val idColumnIndex: Int = it.getColumnIndex(MediaStore.Video.VideoColumns._ID)
                     val nameColumnIndex: Int = it.getColumnIndex(MediaStore.Video.VideoColumns.DISPLAY_NAME)
                     val dataColumnIndex: Int = it.getColumnIndex(MediaStore.Video.VideoColumns.DATA)
+                    val mimeColumnIndex: Int = it.getColumnIndex(MediaStore.Video.VideoColumns.MIME_TYPE)
                     var fileId: String = it.getString(idColumnIndex)
                     var fileName: String = it.getString(nameColumnIndex)
                     var filePath: String = it.getString(dataColumnIndex)
-                    val fileItem = FileItem(FileSystemType.VIDEO.ordinal, fileId, filePath, fileName)
+                    var fileMime: String = it.getString(mimeColumnIndex)
+                    val fileItem = FileItem(FileSystemType.VIDEO.ordinal, fileId, filePath, fileName, fileMime)
                     videos.add(fileItem)
                 }
             }
@@ -611,7 +620,8 @@ object FileDataLoader {
             MediaStore.Files.FileColumns.DATA,
             MediaStore.Files.FileColumns.TITLE,
             MediaStore.Files.FileColumns.MIME_TYPE,
-            MediaStore.Files.FileColumns.DISPLAY_NAME
+            MediaStore.Files.FileColumns.DISPLAY_NAME,
+            MediaStore.Video.VideoColumns.MIME_TYPE
         )
         val selection = (MediaStore.Files.FileColumns.MIME_TYPE + "= ? "
                 + " or " + MediaStore.Files.FileColumns.MIME_TYPE + " = ? "
@@ -645,10 +655,12 @@ object FileDataLoader {
                     val idColumnIndex: Int = it.getColumnIndex(MediaStore.Files.FileColumns._ID)
                     val nameColumnIndex: Int = it.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME)
                     val dataColumnIndex: Int = it.getColumnIndex(MediaStore.Files.FileColumns.DATA)
+                    val mimeColumnIndex: Int = it.getColumnIndex(MediaStore.Video.VideoColumns.MIME_TYPE)
                     var fileId: String = it.getString(idColumnIndex)
                     var fileName: String = it.getString(nameColumnIndex)
                     var filePath: String = it.getString(dataColumnIndex)
-                    val fileItem = FileItem(FileSystemType.TEXT.ordinal, fileId, filePath, fileName)
+                    var fileMime: String = it.getString(mimeColumnIndex)
+                    val fileItem = FileItem(FileSystemType.TEXT.ordinal, fileId, filePath, fileName, fileMime)
                     texts.add(fileItem)
                 }
             }
@@ -669,7 +681,8 @@ object FileDataLoader {
             MediaStore.Files.FileColumns._ID,
             MediaStore.Files.FileColumns.DATA,
             MediaStore.Files.FileColumns.TITLE,
-            MediaStore.Files.FileColumns.DISPLAY_NAME
+            MediaStore.Files.FileColumns.DISPLAY_NAME,
+            MediaStore.Video.VideoColumns.MIME_TYPE
         )
         val selection = MediaStore.Files.FileColumns.MIME_TYPE + "= ? "
         val selectionArgs = arrayOf("application/zip")
@@ -687,10 +700,12 @@ object FileDataLoader {
                     val idColumnIndex: Int = it.getColumnIndex(MediaStore.Files.FileColumns._ID)
                     val nameColumnIndex: Int = it.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME)
                     val dataColumnIndex: Int = it.getColumnIndex(MediaStore.Files.FileColumns.DATA)
+                    val mimeColumnIndex: Int = it.getColumnIndex(MediaStore.Video.VideoColumns.MIME_TYPE)
                     var fileId: String = it.getString(idColumnIndex)
                     var fileName: String = it.getString(nameColumnIndex)
                     var filePath: String = it.getString(dataColumnIndex)
-                    val fileItem = FileItem(FileSystemType.ZIP.ordinal, fileId, filePath, fileName)
+                    var fileMime: String = it.getString(mimeColumnIndex)
+                    val fileItem = FileItem(FileSystemType.ZIP.ordinal, fileId, filePath, fileName, fileMime)
                     zips.add(fileItem)
                 }
             }
@@ -711,7 +726,8 @@ object FileDataLoader {
             MediaStore.Files.FileColumns._ID,
             MediaStore.Files.FileColumns.DATA,
             MediaStore.Files.FileColumns.TITLE,
-            MediaStore.Files.FileColumns.DISPLAY_NAME
+            MediaStore.Files.FileColumns.DISPLAY_NAME,
+            MediaStore.Video.VideoColumns.MIME_TYPE
 
         )
 
@@ -730,10 +746,12 @@ object FileDataLoader {
                     val idColumnIndex: Int = it.getColumnIndex(MediaStore.Files.FileColumns._ID)
                     val nameColumnIndex: Int = it.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME)
                     val dataColumnIndex: Int = it.getColumnIndex(MediaStore.Files.FileColumns.DATA)
+                    val mimeColumnIndex: Int = it.getColumnIndex(MediaStore.Video.VideoColumns.MIME_TYPE)
                     var fileId: String = it.getString(idColumnIndex)
                     var fileName: String = it.getString(nameColumnIndex)
                     var filePath: String = it.getString(dataColumnIndex)
-                    val fileItem = FileItem(FileSystemType.BIN.ordinal, fileId, filePath, fileName)
+                    var fileMime: String = it.getString(mimeColumnIndex)
+                    val fileItem = FileItem(FileSystemType.BIN.ordinal, fileId, filePath, fileName, fileMime)
                     zips.add(fileItem)
                 }
             }

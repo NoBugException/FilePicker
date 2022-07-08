@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.yunchong.filepicker.R
 import com.yunchong.filepicker.RecyclerviewItemDividerDeoration
 import com.yunchong.filepicker.filedata.FileDataManager
@@ -122,17 +123,40 @@ class ShowFileItemActivity : AppCompatActivity() {
                 } else {
                     val myHolder: FileHolder.DefaultViewHolder = holder as FileHolder.DefaultViewHolder
                     val otherItem: FileItem? = fileList?.get(position)
-                    if (otherItem?.mFileName?.endsWith(".bin") == true) {
-                        Glide.with(applicationContext).load(R.mipmap.filesystem_grid_icon_bin).into(holder.mImageView)
-                    } else if (otherItem?.mFileName?.endsWith(".txt") == true) {
-                        Glide.with(applicationContext).load(R.mipmap.filesystem_grid_icon_text).into(holder.mImageView)
-                    } else if (otherItem?.mFileName?.endsWith(".zip") == true) {
-                        Glide.with(applicationContext).load(R.mipmap.filesystem_grid_icon_zip).into(holder.mImageView)
-                    } else {
-                        Glide.with(applicationContext).load(R.mipmap.filesystem_grid_icon_text).into(holder.mImageView)
+                    when(otherItem?.mFileMime) {
+                        "application/octet-stream" -> {
+                            if (otherItem?.mFileName.endsWith(".bin")) {
+                                Glide.with(applicationContext).load(R.mipmap.filesystem_grid_icon_bin).into(holder.mImageView)
+                            } else {
+                                Glide.with(applicationContext).load(R.mipmap.filesystem_grid_icon_text).into(holder.mImageView)
+                            }
+                        }
+                        "application/zip" -> {
+                            if (otherItem?.mFileName?.endsWith(".zip")) {
+                                Glide.with(applicationContext).load(R.mipmap.filesystem_grid_icon_zip).into(holder.mImageView)
+                            } else {
+                                Glide.with(applicationContext).load(R.mipmap.filesystem_grid_icon_text).into(holder.mImageView)
+                            }
+                        }
+                        "video/mp4" -> {
+                            Glide.with(applicationContext)
+                                .load(otherItem.mFilePath)
+                                .apply(
+                                    RequestOptions
+                                    .centerCropTransform()
+                                    .placeholder(R.mipmap.ic_launcher))
+                                .thumbnail(0.5f)
+                                .into(holder.mImageView)
+                        }
+                        else -> Glide.with(applicationContext).load(R.mipmap.filesystem_grid_icon_text).into(holder.mImageView)
                     }
                     myHolder.mFilePath.text = otherItem?.mFilePath
                     myHolder.mFileName.text = otherItem?.mFileName
+                    if ("video/mp4" == otherItem?.mFileMime) {
+                        myHolder.mVideoImageView.visibility = View.VISIBLE
+                    } else {
+                        myHolder.mVideoImageView.visibility = View.GONE
+                    }
                     myHolder.itemView.setOnClickListener {
                         Toast.makeText(applicationContext, "path:" + otherItem?.mFilePath, Toast.LENGTH_LONG).show()
                     }
